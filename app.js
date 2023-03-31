@@ -75,12 +75,13 @@ var codigo = await fetch(url).then(res=>res.json()).then(resp=>resp.codigo)
 await page.type(".VerificationCodeInput_verificationCodeInput__YD3KV", codigo)
 await wait(2782)
 await page.click(".Button_button__GWnCw .SignupOrLoginWithCodeSection_nextButton__VD9IB")
-await page.waitForSelector("a[href='/chatgpt']");
+await wait(10000)
+/*await page.waitForSelector("a[href='/chatgpt']");*/
 await page.goto("https://poe.com/chatgpt");
-await page.waitForSelector("a[href='/chatgpt']");
+/*await page.waitForSelector("a[href='/chatgpt']");
 await page.click("a[href='/chatgpt']");
 await page.waitForSelector(".BotHeader_boldTitle__mzvkG img[alt='ChatGPT']")
-await page.waitForSelector(".ChatMessageInputView_textInput__Aervw");
+await page.waitForSelector(".ChatMessageInputView_textInput__Aervw");*/
 pageChatGPT = page;
 console.log("la pagina esta lista para recibir solicitudes")
 /* elemento para ir al chat gpt
