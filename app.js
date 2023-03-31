@@ -142,7 +142,7 @@ setTimeout(async ()=>{
 
 
 
-app.post('/takl', express.json(),async function (req, res) {
+app.post('/talk', express.json(),async function (req, res) {
 
 	//console.log(videoUrl )
     const reqBody = req.body
