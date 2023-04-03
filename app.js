@@ -134,6 +134,10 @@ await page.click(".Button_button__GWnCw .SignupOrLoginWithCodeSection_nextButton
 //await page.waitForSelector(".PageWithSidebarNavItem_navItem__6742K");
 //await page.waitForSelector("a[href='/chatgpt']");
 await wait(10000)
+await page.goto("https://poe.com");
+await wait(5000)
+await page.goto("https://poe.com/dragonfly");
+await wait(5000)
 /* await page.goto("https://poe.com/chatgpt"); */
 /* await page.waitForSelector("a[href='/chatgpt']");
 await page.click("a[href='/chatgpt']");*/
