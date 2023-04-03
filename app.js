@@ -241,7 +241,9 @@ async function talk(cuerpo) {
    // document.querySelector(".ChatMessageInputView_paintbrushWraper__DHMNW").click()
 
     }
-    await pageChatGPT.type(".ChatMessageInputView_textInput__Aervw",cuerpo.promt)
+    await pageChatGPT.evaluate((promt_recibido)=>{
+    	document.querySelector(".ChatMessageInputView_textInput__Aervw").value = promt_recibido
+    }, cuerpo.promt)
 await pageChatGPT.click(".Button_button__GWnCw.ChatMessageInputView_sendButton__reEpT");
 /* await wait(3000)
 
