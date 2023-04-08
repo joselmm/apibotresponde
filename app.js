@@ -79,7 +79,7 @@ async function lanzarEiniciar() {
     value: 'HxyNyJ-LAQcwukNaBHouzA%3D%3D',
     domain: 'poe.com',
     path: '/',
-    expires: 1715537951.883927,
+    expires: 1715538398.055262,
     size: 31,
     httpOnly: true,
     secure: true,
