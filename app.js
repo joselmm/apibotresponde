@@ -6,7 +6,10 @@ sudo apt-get install libgtk-3-0
 sudo apt-get install libgbm1
 
 */
-const puppeteer = require('puppeteer');
+//const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 const fetch= require('node-fetch');
 require("dotenv").config();
 let browser = "";
@@ -47,103 +50,61 @@ console.log("el navegador esta lanzado")
 var pageChatGPT = false;
 /* https://script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec?accion=actualizar&date=12345&codigo=6789
 https://script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec?accion=consultar */
+
+
+
+
+
+
 async function lanzarEiniciar() {
     var page = await browser.newPage();
     
     //await page.goto(videoUrl);
     await page.goto("https://poe.com");
     //await page.screenshot({"path":"y2mate-search.jpg"});
-    
+    // Establecer la cookie en la página
+      // Habilitar el monitoreo de la red
+  /* const client = await page.target().createCDPSession();
+  await client.send('Network.enable');
+
+  // Capturar los mensajes recibidos a través del WebSocket
+  client.on('Network.webSocketFrameReceived', ({ response }) => {
+    console.log(`Mensaje recibido a través del WebSocket: ${response.payloadData}`);
+  });
+
+  // Capturar los mensajes enviados a través del WebSocket
+  client.on('Network.webSocketFrameSent', ({ response }) => {
+    console.log(`Mensaje enviado a través del WebSocket: ${response.payloadData}`);
+  }); */
+    var cookiesString = await fs.readFile("./cookies.json");
+    var cookies =  JSON.parse(cookiesString);
+    await page.setCookie(...cookies)
+  /*   cookies =  {
+        "domain": "poe.com",
+        "expirationDate": 1715352622.688476,
+        "hostOnly": true,
+        "httpOnly": true,
+        "name": "p-b",
+        "path": "/",
+        "sameSite": null,
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "G2j5iKrYXEtD5DqZn1Uwig%3D%3D"
+    } 
+  await page.setCookie(cookies);*/
+    var local = ["poe-tchannel-channel","poe-chan56-8888-wqijmlmzlobmipghlfrd"]
+  await page.evaluate((local)=>{
+    const [key, value] = local;
+    localStorage.setItem(key,value);
+  }, local)
     /* await page.close();
     return resp; */
-
-var resp= {};
-
-
-await page.waitForSelector(".Button_button__GWnCw .MainSignupLoginSection_switchLoginMethodButton__B8mtS")
-await page.click(".Button_button__GWnCw .MainSignupLoginSection_switchLoginMethodButton__B8mtS")
-/* await new Promise(resolve => {
-    setTimeout(() => {
-      resolve();
-    }, 2000);
-  }); */
-  await wait (2000)
-  await page.screenshot()
-  .then(async (screenshotBuffer) => {
-    const base64Image = screenshotBuffer.toString('base64');
-     var payload = {
-        archivo_name: "capturay2mate.jpg",
-        file_mime: "image/jpeg",
-        archivo_base64: base64Image 
-      };
-
-      var result = await fetch(
-        'https://script.google.com/macros/s/AKfycbz9GV4R7FOQOoTukIl8RDmdqw_sOy00z8H1IJDgA8dCQIMCbxO031VFF4TbwjSqBf0PIg/exec',
-        {
-          method: 'POST',
-          body: JSON.stringify(payload),
-        }
-      )
-        .then((res) => res.json())
-        .then((res) => {
-console.log(res)
-resp = res;}
-);
-  })
-  .catch((error) => {
-    console.log('Error al capturar la pantalla:', error);
-  });
-await page.waitForSelector(".EmailInput_emailInput__4v_bn");
-/* await new Promise(resolve => {
-    setTimeout(() => {
-      resolve();
-    }, 2000);
-  });  */
-  var url = "https://script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec";
-var correo = await fetch(url).then(res=>res.json()).then(resp=>resp.correo)
-
-await page.type(".EmailInput_emailInput__4v_bn",correo);
-
-//.Button_button__GWnCw.MainSignupLoginSection_nextButton__s4b1U
-await page.waitForSelector(".Button_button__GWnCw.MainSignupLoginSection_nextButton__s4b1U")
-await page.click(".Button_button__GWnCw.MainSignupLoginSection_nextButton__s4b1U")
-await page.waitForSelector(".VerificationCodeInput_verificationCodeInput__YD3KV")
-//await page.click(".VerificationCodeInput_verificationCodeInput__YD3KV")
-console.log("esperando el codigo")
-await wait(15000)
-/* const urlParaAvisar = "https://script.google.com/macros/s/AKfycbxTsvP__I2ahC2HHjSpDlaeJxJiyRydESna_gq5uu2zJtQoMYbszJhSdFxCgCrqxk1IbQ/exec";
-var codigoEmail =await (function avisar(){
-    return new Promise(async (resolve,reject)=>{
-         for (let index = 0; index < 10; index++) {
-           var respuesta = await fetch(urlParaAvisar).then(res=>res.json()).then(res=>res)
-            if(respuesta.noError){
-                resolve(respuesta.codigo)
-                break;
-            }
-         }
-    })
-})()
-.then(codigo=>codigo)
- */
-var codigo = await fetch(url).then(res=>res.json()).then(resp=>resp.codigo)
-
-await page.type(".VerificationCodeInput_verificationCodeInput__YD3KV", codigo)
-//await page.type(".VerificationCodeInput_verificationCodeInput__YD3KV", "441420")
-await wait(1562)
-await page.click(".Button_button__GWnCw .SignupOrLoginWithCodeSection_nextButton__VD9IB")
-//await page.waitForSelector(".PageWithSidebarNavItem_navItem__6742K");
-//await page.waitForSelector("a[href='/chatgpt']");
+    await wait(2000)
+    await page.reload();
+console.log("esperando segundos")
 await wait(10000)
-await page.goto("https://poe.com");
-await wait(5000)
-await page.goto("https://poe.com/dragonfly");
-await wait(5000)
-/* await page.goto("https://poe.com/chatgpt"); */
-/* await page.waitForSelector("a[href='/chatgpt']");
-await page.click("a[href='/chatgpt']");*/
-/* await page.waitForSelector(".BotHeader_boldTitle__mzvkG img[alt='ChatGPT']")
-await page.waitForSelector(".ChatMessageInputView_textInput__Aervw");  */
-/* await wait(10000); */
+
 pageChatGPT = page;
 /* var cookies = await page.cookies()
 await fs.writeFile("./cookies.json",JSON.stringify(cookies, null, 2)) */
@@ -246,7 +207,6 @@ async function talk(cuerpo) {
     }, cuerpo.promt)
 await pageChatGPT.click(".Button_button__GWnCw.ChatMessageInputView_sendButton__reEpT");
 /* await wait(3000)
-
 await pageChatGPT.screenshot()
   .then(async (screenshotBuffer) => {
     const base64Image = screenshotBuffer.toString('base64');
@@ -255,7 +215,6 @@ await pageChatGPT.screenshot()
         file_mime: "image/jpeg",
         archivo_base64: base64Image 
       };
-
       var result = await fetch(
         'https://script.google.com/macros/s/AKfycbz9GV4R7FOQOoTukIl8RDmdqw_sOy00z8H1IJDgA8dCQIMCbxO031VFF4TbwjSqBf0PIg/exec',
         {
