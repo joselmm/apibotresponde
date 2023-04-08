@@ -83,10 +83,10 @@ async function lanzarEiniciar() {
 	await page.setCookie(
 	{
     "name": "p-b",
-    "value": "S6u6srYOq87gwiRJMaxQAg%3D%3D",
+    "value": "F5ph7Vus4jw7YP5bHCefRg%3D%3D",
     "domain": "poe.com",
     "path": "/",
-    "expires": 1715477522.814119,
+    "expires": 1715478693.866226,
     "size": 31,
     "httpOnly": true,
     "secure": true,
@@ -113,7 +113,7 @@ async function lanzarEiniciar() {
         "value": "G2j5iKrYXEtD5DqZn1Uwig%3D%3D"
     } 
   await page.setCookie(cookies);*/
-    var local = ["poe-tchannel-channel","poe-chan55-8888-uodnvhubxqbjrehvtsnw"]
+    var local = ["poe-tchannel-channel","poe-chan51-8888-lsuyntsoelxnbypjzgsg"]
   await page.evaluate((local)=>{
     const [key, value] = local;
     localStorage.setItem(key,value);
