@@ -192,6 +192,13 @@ app.get('/refresh', async (req, res) => {
   var respuesta = {
     noError: true,
   };
+  if (responsing){
+    respuesta.noError=false;
+    respuesta.message = "The chat is currently responsing a request";
+    res.json(respuesta);
+    return
+  }
+
   try {
     refreshingThePoePage = true;
     await pageChatGPT.goto('https://poe.com');
