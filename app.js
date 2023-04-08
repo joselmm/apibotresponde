@@ -79,7 +79,26 @@ async function lanzarEiniciar() {
   }); */
     var cookiesString = await fs.readFile("./cookies.json");
     var cookies =  JSON.parse(cookiesString);
-    await page.setCookie(...cookies)
+    //await page.setCookie(...cookies)
+	await page.setCookie(
+	{
+    "name": "p-b",
+    "value": "S6u6srYOq87gwiRJMaxQAg%3D%3D",
+    "domain": "poe.com",
+    "path": "/",
+    "expires": 1715352622.688476,
+    "size": 31,
+    "httpOnly": true,
+    "secure": true,
+    "session": false,
+    "sameParty": false,
+    "sourceScheme": "Secure",
+    "sourcePort": 443
+  }
+	
+	
+	)
+	
   /*   cookies =  {
         "domain": "poe.com",
         "expirationDate": 1715352622.688476,
