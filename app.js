@@ -94,7 +94,7 @@ async function lanzarEiniciar() {
         "value": "G2j5iKrYXEtD5DqZn1Uwig%3D%3D"
     } 
   await page.setCookie(cookies);*/
-    var local = ["poe-tchannel-channel","poe-chan56-8888-wqijmlmzlobmipghlfrd"]
+    var local = ["poe-tchannel-channel","poe-chan55-8888-uodnvhubxqbjrehvtsnw"]
   await page.evaluate((local)=>{
     const [key, value] = local;
     localStorage.setItem(key,value);
