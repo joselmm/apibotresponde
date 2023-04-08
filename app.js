@@ -258,7 +258,7 @@ await (function name() {
     return new Promise(async (resolve,reject)=>{
         for (let index = 0; index <20; index++) {
             try {
-                await pageChatGPT.waitForSelector(".ChatMessageFeedbackButtons_feedbackButtonsContainer__0Xd3I", { timeout: 2000 });
+                await pageChatGPT.waitForSelector(".ChatMessageFeedbackButtons_feedbackButtonsContainer__0Xd3I", { timeout: 12000 });
                 // Si se encuentra el selector, se ejecutan estas instrucciones:
                 console.log('Se encontró el selector.');
                 resolve(true);
@@ -268,7 +268,7 @@ await (function name() {
                 // Si no se encuentra el selector, se ejecutan estas instrucciones:
                 console.log('No se encontró el selector.');
                 await pageChatGPT.reload();
-		await pageChatGPT.waitForNavigation();
+		//await pageChatGPT.waitForNavigation();
               }
             
         }
