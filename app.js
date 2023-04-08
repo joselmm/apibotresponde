@@ -121,7 +121,8 @@ async function lanzarEiniciar() {
     /* await page.close();
     return resp; */
     await wait(2000)
-    await page.reload();
+    //await page.reload();
+await page.goto("https://poe.com");
 console.log("esperando segundos")
 await wait(10000)
 
