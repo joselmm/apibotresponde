@@ -248,6 +248,7 @@ await (function name() {
                 // Si no se encuentra el selector, se ejecutan estas instrucciones:
                 console.log('No se encontró el selector.');
                 await pageChatGPT.reload();
+		await pageChatGPT.waitForNavigation();
               }
             
         }
