@@ -351,7 +351,7 @@ app.get('/refresh', async (req, res) => {
     respuesta.message = error.message;
   }
 
-  /* refreshingThePoePage = false; */
+  refreshingThePoePage = false;
   res.json(respuesta);
 });
 
