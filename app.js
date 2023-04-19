@@ -416,7 +416,7 @@ async function talk(cuerpo) {
       promt_recibido;
   }, cuerpo.message);
   await pageChatGPT.click(
-    '.Button_button__GWnCw.ChatMessageInputView_sendButton__reEpT'
+    '.Button_buttonBase__0QP_m.Button_primary__pIDjn.ChatMessageInputView_sendButton__reEpT'
   );
 
         var valor = await new Promise(async (resolve,reject)=>{
