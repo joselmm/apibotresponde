@@ -89,7 +89,7 @@ async function lanzarEiniciar() {
             .then(res=> res)
         },url)
 
-        if(!resp.pageProps.payload.chatOfBotDisplayName.defaultBotObject.messageLimit.dailyLimit){
+        if(resp.pageProps?.payload.chatOfBotDisplayName.defaultBotObject.messageLimit.dailyLimit===null){
             
             chats.push((resp));
             respondiendo.push({
@@ -149,7 +149,7 @@ async function lanzarEiniciar() {
     value: "UJ20GQHgs69XdVxubiPn4g%3D%3D",
     domain: 'poe.com',
     path: '/',
-    expires: 1716944366.335409,
+    expires: 1716946659.104226,
     size: 31,
     httpOnly: true,
     secure: true,
@@ -178,7 +178,7 @@ async function lanzarEiniciar() {
   */
 
  
-  var local = ['poe-tchannel-channel', "poe-chan52-8888-ywhtrbydklrqhypuentu"];
+  var local = ['poe-tchannel-channel', "poe-chan58-8888-qwkyhmebzruujafjrgim"];
   await page.evaluate((local) => {
     const [key, value] = local;
     localStorage.setItem(key, value);
@@ -186,7 +186,7 @@ async function lanzarEiniciar() {
   /* await page.close();
     return resp; */
   await wait(1785);
-  //await page.reload();
+  await page.reload();
   await page.goto("https://poe.com/ChatGPT");
   console.log('esperando segundos');
   
