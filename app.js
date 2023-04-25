@@ -149,7 +149,7 @@ async function lanzarEiniciar() {
     value: "UJ20GQHgs69XdVxubiPn4g%3D%3D",
     domain: 'poe.com',
     path: '/',
-    expires: 1716946659.104226,
+    expires: 1716947245.418632,
     size: 31,
     httpOnly: true,
     secure: true,
@@ -159,10 +159,12 @@ async function lanzarEiniciar() {
     sourcePort: 443,
   });
   /*
+ 
+  
   [
     {
         "domain": "poe.com",
-        "expirationDate": 1716127785.310298,
+        "expirationDate": 1716947245.418632,
         "hostOnly": true,
         "httpOnly": true,
         "name": "p-b",
@@ -171,7 +173,7 @@ async function lanzarEiniciar() {
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "O5iAGu6s8G6FK8eqTeF-Xw%3D%3D"
+        "value": "UJ20GQHgs69XdVxubiPn4g%3D%3D"
     }
 ]
  
