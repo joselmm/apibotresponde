@@ -17,6 +17,9 @@ require('dotenv').config();
 let browser = '';
 const fs = require('fs').promises;
 const port = process.env.PORT || 8080;
+const WebSocket = require("ws");
+const wsServer = new WebSocket.Server({ port: port });
+var socketClient;
 var express = require('express');
 var cors = require('cors');
 var app = express();
@@ -42,9 +45,9 @@ browserPromise
   .then(async (browserResult) => {
     //script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec
     https: browser = browserResult;
-    app.listen(port, () => {
+    /* app.listen(port, () => {
       console.log(`Servidor de Express escuchando en el puerto ${port}`);
-    });
+    }); */
     console.log('el navegador esta lanzado');
   })
   .catch((error) => {
@@ -119,15 +122,18 @@ async function lanzarEiniciar() {
   // Capturar los mensajes recibidos a través del WebSocket
   client.on('Network.webSocketFrameReceived', ({ response }) => {
     var message = JSON.parse(JSON.parse(response.payloadData).messages[0]);
+    if(message.payload.data.messageAdded?.author==="chinchilla"){
+      socketClient.send(message.payload.data.messageAdded.text);
+    }
     if(message.payload.data.messageAdded?.state==="complete"){
         
             if(responsing && message.payload.data.messageAdded.author==="chinchilla"){
-                console.log(message);
+                //console.log(message);
                 responsing = false;
                 answer=message.payload.data.messageAdded.text;
                // console.log(message.payload.data.messageAdded.text)
         
-        }
+            }
        // console.log(`Mensaje recibido a través del WebSocket: ${ typeof response.payloadData}`);
        
     }
@@ -588,3 +594,47 @@ async function enviarMensaje(params) {
         }
         return  respuesta;
 }
+
+
+
+
+
+
+
+wsServer.on("connection", (ws) => {
+  socketClient = ws;
+  console.log("un usuario se a conectado al websocket");
+  //send message welcome:
+
+  ws.send("te has conectado a ChatGPT");
+
+  ws.on("message", (message) => {
+    /* console.log(message.toString())
+    console.log(typeof message) */
+    message = message.toString();
+    if(!pageChatGPT){
+      
+      ws.send('the page has been stoped');
+      return
+      }
+    if (refreshingThePoePage) {
+      ws.send('The page is currently refreshing');
+      return;
+    }
+    /* if(!reqBody.message){
+      ws.send('falta el mensaje o promt');
+      return
+    }  */
+    var cuerpo = {}
+    cuerpo.message=message
+    cuerpo.clearContext=false;
+
+    if(message.charAt(0)==="/"){
+      cuerpo.message=message.slice(1)
+      cuerpo.clearContext=true;
+    }
+    //ws.send("tu mensaje fue: " + message);
+    
+    talk(cuerpo);
+  });
+});
