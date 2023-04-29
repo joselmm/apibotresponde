@@ -134,8 +134,34 @@ async function lanzarEiniciar() {
     
   });
 
-  
+  var accountInfo = await page.evaluate(async ()=>{
+    return await fetch("https://script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec")
+.then(res=>res.json()).then(obj=>obj)
+  });
 
+  await page.evaluate(()=>{
+  document.querySelectorAll(".Button_buttonBase__0QP_m.Button_flat__1hj0f")[1].click()
+  });
+  await wait(1202)
+  
+  console.log("escribiendo correo "+accountInfo.correo)
+  await page.type(".EmailInput_emailInput__4v_bn",accountInfo.correo)
+
+  await wait(1256)
+
+  await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
+  console.log("esperando 15 segundos por codigo")
+  await wait(15000)
+  var accountInfo = await page.evaluate(async ()=>{
+    return await fetch("https://script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec")
+.then(res=>res.json()).then(obj=>obj)
+  });
+
+  await page.type(".VerificationCodeInput_verificationCodeInput__YD3KV",accountInfo.codigo)
+
+  await wait(15000)
+  await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
+  console.log("ya se ingrso el codigo, esperando 10 segundos")
   /* // Capturar los mensajes enviados a través del WebSocket
   client.on('Network.webSocketFrameSent', ({ response }) => {
     console.log(`Mensaje enviado a través del WebSocket: ${response.payloadData}`);
@@ -144,7 +170,7 @@ async function lanzarEiniciar() {
   var cookies = JSON.parse(cookiesString); */
   //await page.setCookie(...cookies)
     //var expirationDateInSeconds = expirationDate.getTime() / 1000;
-    await page.setCookie({
+   /*  await page.setCookie({
     name: 'p-b',
     value: "UJ20GQHgs69XdVxubiPn4g%3D%3D",
     domain: 'poe.com',
@@ -157,7 +183,7 @@ async function lanzarEiniciar() {
     sameParty: false,
     sourceScheme: 'Secure',
     sourcePort: 443,
-  });
+  }); */
   /*
  
   
@@ -180,19 +206,19 @@ async function lanzarEiniciar() {
   */
 
  
-  var local = ['poe-tchannel-channel', "poe-chan58-8888-qwkyhmebzruujafjrgim"];
+  /* var local = ['poe-tchannel-channel', "poe-chan58-8888-qwkyhmebzruujafjrgim"];
   await page.evaluate((local) => {
     const [key, value] = local;
     localStorage.setItem(key, value);
-  }, local);
+  }, local); */
   /* await page.close();
     return resp; */
-  await wait(1785);
-  await page.reload();
+  await wait(5621);
+  /* await page.reload(); */
+  console.log('yendo a chat gpt');
   await page.goto("https://poe.com/ChatGPT");
-  console.log('esperando segundos');
   
-  await wait(10000);
+  await wait(2300);
   pageChatGPT = page;
   /* var cookies = await page.cookies()
   await fs.writeFile("./cookies.json",JSON.stringify(cookies, null, 2)) */
