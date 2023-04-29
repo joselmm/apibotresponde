@@ -205,6 +205,7 @@ async function lanzarEiniciar() {
   /* ELemento que aparece cuando termina de escribiruna respuesta, es el elemto de like y dislike
 document.querySelector(".ChatMessageFeedbackButtons_feedbackButtonsContainer__0Xd3I")
 */
+  await page.setViewport({ width: 375, height: 667 });
   await page
     .screenshot()
     .then(async (screenshotBuffer) => {
