@@ -16,7 +16,7 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 let browser = '';
 const fs = require('fs').promises;
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 const WebSocket = require("ws");
 const wsServer = new WebSocket.Server({ port: port });
 var socketClient;
@@ -123,19 +123,20 @@ async function lanzarEiniciar() {
   client.on('Network.webSocketFrameReceived', ({ response }) => {
     var message = JSON.parse(JSON.parse(response.payloadData).messages[0]);
     if(message.payload.data.messageAdded?.author==="chinchilla"){
-      socketClient.send(message.payload.data.messageAdded.text);
-    }
-    if(message.payload.data.messageAdded?.state==="complete"){
-        
-            if(responsing && message.payload.data.messageAdded.author==="chinchilla"){
-                //console.log(message);
-                responsing = false;
-                answer=message.payload.data.messageAdded.text;
-               // console.log(message.payload.data.messageAdded.text)
-        
-            }
-       // console.log(`Mensaje recibido a través del WebSocket: ${ typeof response.payloadData}`);
-       
+      if(responsing && message.payload.data.messageAdded?.state==="complete"){
+        responsing = false;
+        answer=message.payload.data.messageAdded.text;
+       // console.log(message.payload.data.messageAdded.text)
+
+      }
+      var res = {};
+      res.answer = message.payload.data.messageAdded.text;
+      res.state = message.payload.data.messageAdded.state;
+      res.messageId = message.payload.data.messageAdded.messageId;
+      res.suggestedReplies = message.payload.data.messageAdded.suggestedReplies;
+      //res.suggestedReplies = message.payload.data.messageAdded.suggestedReplies;
+      socketClient.send(JSON.stringify(res));
+      //console.log(message.payload.data.messageAdded);
     }
     
   });
@@ -226,6 +227,8 @@ async function lanzarEiniciar() {
   
   await wait(2300);
   pageChatGPT = page;
+
+
   /* var cookies = await page.cookies()
   await fs.writeFile("./cookies.json",JSON.stringify(cookies, null, 2)) */
   console.log('la pagina esta lista para recibir solicitudes');
@@ -274,7 +277,7 @@ document.querySelector(".ChatMessageFeedbackButtons_feedbackButtonsContainer__0X
         message:"cuanto es 9x8"  
     }
    ) */
-   
+   setInterval(refreshPage, 60 * 60 * 1000); // 1 hora en milisegundos 60 * 60 * 1000   
 }
 
 (async () => {
@@ -621,10 +624,12 @@ wsServer.on("connection", (ws) => {
       ws.send('The page is currently refreshing');
       return;
     }
-    /* if(!reqBody.message){
-      ws.send('falta el mensaje o promt');
-      return
-    }  */
+
+    if (responsing) {
+      ws.send('Chat is currently responsing another request');
+      return;
+    }
+
     var cuerpo = {}
     cuerpo.message=message
     cuerpo.clearContext=false;
@@ -638,3 +643,97 @@ wsServer.on("connection", (ws) => {
     talk(cuerpo);
   });
 });
+
+async function refreshPage(){
+  if (refreshingThePoePage){
+    console.log("se intento refrescar la pagina at " + Date.now()+ " pero se estaba refrescando segun refreshingThePoePage");
+    return
+  }
+  if (responsing){
+    console.log("se intento refrescar la pagina at " + Date.now()+ " pero se estaba respondiendo segun responsing");
+    return
+  }
+  
+  if(!pageChatGPT){
+    console.log("se intento refrescar la pagina at " + Date.now()+ " pero la pagina no existe segun pageChatGPT");
+    return
+  }
+
+  try {
+     refreshingThePoePage = true; 
+     var result = await new Promise(async (resolve)=>{
+        for (let i = 0; i < 20; i++) {
+            
+            try {
+                await pageChatGPT.goto('https://poe.com/ChatGPT');
+                
+                
+                await pageChatGPT.waitForSelector(
+                  '.ChatMessageInputView_textInput__Aervw',
+                  { timeout: 4000 }
+                );
+                // Si se encuentra el selector, se ejecutan estas instrucciones:
+                console.log('Se encontró el selector durandte el refresh.');
+                resolve(true);
+                break;
+              } catch (error) {
+                // Si no se encuentra el selector, se ejecutan estas instrucciones:
+                console.log('No se encontró el selector durante el refresh. iteracion: '+i);
+                if(i===19){
+                    /* respuesta.message = "no se pudo encontrar el selector de textarea para escribir mensajes"
+                    respuesta.noError = false; */
+                    resolve(false);
+                }else{
+                    await pageChatGPT.goto('https://poe.com/ChatGPT');
+                }
+                
+                //await pageChatGPT.waitForNavigation();
+              }
+        }
+    })
+    
+    if(!result){
+
+    }
+    //await pageChatGPT.click('a[href="/GPT-4"]');
+    await wait(4000)
+    var payload={};
+    await pageChatGPT
+      .screenshot()
+      .then(async (screenshotBuffer) => {
+        const base64Image = screenshotBuffer.toString('base64');
+        payload = {
+          archivo_name: Date.now() + '.jpg',
+          file_mime: 'image/jpeg',
+          archivo_base64: base64Image,
+        };
+
+        
+      })
+      .catch((error) => {
+        console.log('Error al capturar la pantalla:', error);
+      });
+      await fetch(
+        'https://script.google.com/macros/s/AKfycbz9GV4R7FOQOoTukIl8RDmdqw_sOy00z8H1IJDgA8dCQIMCbxO031VFF4TbwjSqBf0PIg/exec',
+        {
+          method: 'POST',
+          body: JSON.stringify(payload),
+        }
+      )
+        .then((res) => res.json())
+        .then((res2) => {
+        console.log("captura refresh "+Date.now()+": "+res2.downloadLink)
+          /*  
+          respuesta.screenshot = res2.downloadLink;
+          respuesta.date = Number(res2.fileName.slice(0,-4)); */
+        });
+        
+  } catch (error) {
+   /*  respuesta.noError = false;
+    respuesta.message = error.message; */
+    console.log("Error al refrescar: "+Date.now()+": "+error.message)
+  }
+
+  refreshingThePoePage = false;
+  
+}
