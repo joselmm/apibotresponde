@@ -89,7 +89,7 @@ async function lanzarEiniciar() {
             .then(res=> res)
         },url)
 
-        if(resp.pageProps?.payload.chatOfBotDisplayName.defaultBotObject.messageLimit.dailyLimit===null){
+        if(resp.pageProps?.payload?.chatOfBotDisplayName?.defaultBotObject?.messageLimit?.dailyLimit===null){
             
             chats.push((resp));
             respondiendo.push({
