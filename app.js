@@ -145,8 +145,10 @@ async function lanzarEiniciar() {
   await wait(3000)
     
 
-  console.log("escribiendo correo "+accountInfo.correo)
-  await page.type(".EmailInput_emailInput__4v_bn",accountInfo.correo)
+console.log("escribiendo correo "+accountInfo.correo)
+await page.type(".EmailInput_emailInput__4v_bn",accountInfo.correo)
+  //
+await wait(3000);
 await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
   console.log("esperando 7 segundos por codigo");
 await wait(7000);
@@ -174,54 +176,13 @@ await inputCodigo.type(accountInfo.codigo);
 
 // Escribir en el elemento devuelto usando elementHandle.type()
 
-await wait(1800);
+await wait(3000);
 await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn");
 console.log("ya se ingrso el codigo, esperando 8 segundos");
   await wait(8000)
-  await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
+  //await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
   
-  /* // Capturar los mensajes enviados a través del WebSocket
-  client.on('Network.webSocketFrameSent', ({ response }) => {
-    console.log(`Mensaje enviado a través del WebSocket: ${response.payloadData}`);
-  }); */
-  /* var cookiesString = await fs.readFile('./cookies.json');
-  var cookies = JSON.parse(cookiesString); */
-  //await page.setCookie(...cookies)
-    //var expirationDateInSeconds = expirationDate.getTime() / 1000;
-   /*  await page.setCookie({
-    name: 'p-b',
-    value: "UJ20GQHgs69XdVxubiPn4g%3D%3D",
-    domain: 'poe.com',
-    path: '/',
-    expires: 1716947245.418632,
-    size: 31,
-    httpOnly: true,
-    secure: true,
-    session: false,
-    sameParty: false,
-    sourceScheme: 'Secure',
-    sourcePort: 443,
-  }); */
-  /*
- 
-  
-  [
-    {
-        "domain": "poe.com",
-        "expirationDate": 1716947245.418632,
-        "hostOnly": true,
-        "httpOnly": true,
-        "name": "p-b",
-        "path": "/",
-        "sameSite": null,
-        "secure": true,
-        "session": false,
-        "storeId": null,
-        "value": "UJ20GQHgs69XdVxubiPn4g%3D%3D"
-    }
-]
- 
-  */
+
 
  
   /* var local = ['poe-tchannel-channel', "poe-chan58-8888-qwkyhmebzruujafjrgim"];
@@ -231,7 +192,7 @@ console.log("ya se ingrso el codigo, esperando 8 segundos");
   }, local); */
   /* await page.close();
     return resp; */
-  await wait(5621);
+  
   /* await page.reload(); */
   console.log('yendo a chat gpt');
   await page.goto("https://poe.com/ChatGPT");
