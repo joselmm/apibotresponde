@@ -135,7 +135,7 @@ async function lanzarEiniciar() {
   });
 
   var accountInfo = await page.evaluate(async ()=>{
-    return await fetch("https://script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec")
+    return await fetch("https://script.google.com/macros/s/AKfycbxxamGgMO2bId1anTUPMFauUD86WkqTl_vB4gJwfyhDgpuSLHqWdEgUMHO_Hd8SmZiP4w/exec")
 .then(res=>res.json()).then(obj=>obj)
   });
 
@@ -147,21 +147,29 @@ async function lanzarEiniciar() {
   console.log("escribiendo correo "+accountInfo.correo)
   await page.type(".EmailInput_emailInput__4v_bn",accountInfo.correo)
 
-  await wait(1256)
+  console.log("esperando 7 segundos por codigo");
+await wait(7000);
 
+//Esta url es para consultar la bandeja de entrada en mi gmail con el correo que hay en el accountInfo
+var accountInfo = await page.evaluate(async () => {
+return await fetch(
+"https://script.google.com/macros/s/AKfycbzMZUFY1B_yd0bvTyuQTwlf-x5NTfgF8MFGKW0AGRMwTNvZ787xT86fvJuoyMyioLA3/exec"
+)
+.then((res) => res.json())
+.then((obj) => obj);
+});
+console.log(accountInfo);
+await page.type(
+".VerificationCodeInput_verificationCodeInput__YD3KV",
+accountInfo.codigo
+);
+
+await wait(1800);
+await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn");
+console.log("ya se ingrso el codigo, esperando 8 segundos");
+  await wait(8000)
   await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
-  console.log("esperando 15 segundos por codigo")
-  await wait(15000)
-  var accountInfo = await page.evaluate(async ()=>{
-    return await fetch("https://script.google.com/macros/s/AKfycbzHEa53uZqdbxkngX95aLH7w6CqGR-fvDnavmJGYViM6dFyukr-QT84j43-Zrc-avusxQ/exec")
-.then(res=>res.json()).then(obj=>obj)
-  });
-
-  await page.type(".VerificationCodeInput_verificationCodeInput__YD3KV",accountInfo.codigo)
-
-  await wait(15000)
-  await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
-  console.log("ya se ingrso el codigo, esperando 10 segundos")
+  
   /* // Capturar los mensajes enviados a través del WebSocket
   client.on('Network.webSocketFrameSent', ({ response }) => {
     console.log(`Mensaje enviado a través del WebSocket: ${response.payloadData}`);
