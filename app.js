@@ -164,12 +164,15 @@ console.log(accountInfo);
 accountInfo.codigo
 );
 */
-  await verificationCodeInput.evaluate(input => {
-    var emamminput = document.querySelector(".VerificationCodeInput_verificationCodeInput__YD3KV");
-  emamminput.value = accountInfo.codigo;
+ var inputCodigo = await verificationCodeInput.evaluate(input => {
+    var el_input = document.querySelector(".VerificationCodeInput_verificationCodeInput__YD3KV");
+  return el_input
 });
   
 
+
+// Escribir en el elemento devuelto usando elementHandle.type()
+await inputCodigo.type(accountInfo.codigo);
 await wait(1800);
 await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn");
 console.log("ya se ingrso el codigo, esperando 8 segundos");
