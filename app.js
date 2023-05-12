@@ -151,7 +151,7 @@ await page.type(".EmailInput_emailInput__4v_bn",accountInfo.correo)
 await wait(3000);
 await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
   console.log("borrando emails de: "+accountInfo.correo)
-var resultDeleteEMails = await page.evaluate(()=>{
+var resultDeleteEMails = await page.evaluate(async ()=>{
   return await fetch("https://script.google.com/macros/s/AKfycbzMZUFY1B_yd0bvTyuQTwlf-x5NTfgF8MFGKW0AGRMwTNvZ787xT86fvJuoyMyioLA3/exec?borrar=si").then(res=>res.json()).then(res=>res);
 })
 if(resultDeleteEMails.noError){console.log("no hubo errores borrando los emails de: "+accountInfo.correo)};
