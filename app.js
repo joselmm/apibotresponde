@@ -122,7 +122,7 @@ async function lanzarEiniciar() {
     var message = JSON.parse(JSON.parse(response.payloadData).messages[0]);
     if(message.payload.data.messageAdded?.state==="complete"){
         
-            if(responsing && message.payload.data.messageAdded.author==="chinchilla"){
+            if(responsing && message.payload.data.messageAdded.author==="capybara"){
                 console.log(message);
                 responsing = false;
                 answer=message.payload.data.messageAdded.text;
