@@ -159,10 +159,16 @@ return await fetch(
 .then((obj) => obj);
 });
 console.log(accountInfo);
-await page.type(
+/*await page.type(
 ".VerificationCodeInput_verificationCodeInput__YD3KV",
 accountInfo.codigo
 );
+*/
+  await verificationCodeInput.evaluate(input => {
+    var emamminput = document.querySelector(".VerificationCodeInput_verificationCodeInput__YD3KV");
+  emamminput.value = accountInfo.codigo;
+});
+  
 
 await wait(1800);
 await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn");
