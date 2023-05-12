@@ -138,15 +138,16 @@ async function lanzarEiniciar() {
     return await fetch("https://script.google.com/macros/s/AKfycbxxamGgMO2bId1anTUPMFauUD86WkqTl_vB4gJwfyhDgpuSLHqWdEgUMHO_Hd8SmZiP4w/exec")
 .then(res=>res.json()).then(obj=>obj)
   });
-
+//esto es porque la pagina cambia mucho
   await page.evaluate(()=>{
   document.querySelectorAll(".Button_buttonBase__0QP_m.Button_flat__1hj0f")[1].click()
   });
-  await wait(1202)
-  
+  await wait(3000)
+    
+
   console.log("escribiendo correo "+accountInfo.correo)
   await page.type(".EmailInput_emailInput__4v_bn",accountInfo.correo)
-
+await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
   console.log("esperando 7 segundos por codigo");
 await wait(7000);
 
@@ -159,20 +160,20 @@ return await fetch(
 .then((obj) => obj);
 });
 console.log(accountInfo);
-/*await page.type(
+await page.type(
 ".VerificationCodeInput_verificationCodeInput__YD3KV",
 accountInfo.codigo
 );
-*/
- var inputCodigo = await page.evaluate(input => {
+
+ /*var inputCodigo = await page.evaluate(input => {
     var el_input = document.querySelector(".VerificationCodeInput_verificationCodeInput__YD3KV");
   return el_input
 });
-  
-
+await inputCodigo.type(accountInfo.codigo);
+*/
 
 // Escribir en el elemento devuelto usando elementHandle.type()
-await inputCodigo.type(accountInfo.codigo);
+
 await wait(1800);
 await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn");
 console.log("ya se ingrso el codigo, esperando 8 segundos");
