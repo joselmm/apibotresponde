@@ -164,7 +164,7 @@ console.log(accountInfo);
 accountInfo.codigo
 );
 */
- var inputCodigo = await verificationCodeInput.evaluate(input => {
+ var inputCodigo = await page.evaluate(input => {
     var el_input = document.querySelector(".VerificationCodeInput_verificationCodeInput__YD3KV");
   return el_input
 });
