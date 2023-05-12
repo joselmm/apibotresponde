@@ -200,8 +200,8 @@ console.log("ya se ingrso el codigo, esperando 8 segundos");
     return resp; */
   
   /* await page.reload(); */
-  console.log('yendo a chat gpt');
-  await page.goto("https://poe.com/ChatGPT");
+  console.log('yendo a chat sage');
+  await page.goto("https://poe.com/");
   
   await wait(2300);
   pageChatGPT = page;
@@ -309,7 +309,7 @@ app.get('/refresh', async (req, res) => {
         for (let i = 0; i < 20; i++) {
             
             try {
-                await pageChatGPT.goto('https://poe.com/ChatGPT');
+                await pageChatGPT.goto('https://poe.com/');
                 
                 
                 await pageChatGPT.waitForSelector(
@@ -328,7 +328,7 @@ app.get('/refresh', async (req, res) => {
                     respuesta.noError = false;
                     resolve(false);
                 }else{
-                    await pageChatGPT.goto('https://poe.com/ChatGPT');
+                    await pageChatGPT.goto('https://poe.com/');
                 }
                 
                 //await pageChatGPT.waitForNavigation();
