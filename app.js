@@ -20,6 +20,7 @@ const port = process.env.PORT || 8080;
 var express = require('express');
 var cors = require('cors');
 var app = express();
+var relanzando = true;
 app.use(cors());
 var refreshingThePoePage = false;
 const browserPromise = puppeteer.launch({
@@ -204,6 +205,7 @@ console.log("ya se ingrso el codigo, esperando 8 segundos");
   
   await wait(2300);
   pageChatGPT = page;
+  var relanzando = false;
   /* var cookies = await page.cookies()
   await fs.writeFile("./cookies.json",JSON.stringify(cookies, null, 2)) */
   console.log('la pagina esta lista para recibir solicitudes');
@@ -274,12 +276,19 @@ app.get('/refresh', async (req, res) => {
   var respuesta = {
     noError: true,
   };
+  if(relanzando){
+    respuesta.noError = false;
+    respuesta.message = "se detuvo el proyecto y esta relazando espere por lo menos 7minutos";
+    res.json(respuesta);
+    return
+  }
   if (refreshingThePoePage){
     respuesta.noError=false;
     respuesta.message = "The page is already reloading";
     res.json(respuesta);
     return
   }
+ 
   if (responsing){
     respuesta.noError=false;
     respuesta.message = "The chat is currently responsing a request";
@@ -378,6 +387,12 @@ app.post('/talk', express.json(), async function (req, res) {
   var respuesta = {
     noError: true,
   };
+  if(relanzando){
+    respuesta.noError = false;
+    respuesta.message = "se detuvo el proyecto y esta relazando espere por lo menos 7minutos";
+    res.json(respuesta);
+    return
+  }
   if(!pageChatGPT){
     respuesta.noError = false;
     respuesta.message = 'the page has been stoped';
