@@ -205,7 +205,7 @@ console.log("ya se ingrso el codigo, esperando 8 segundos");
   
   await wait(2300);
   pageChatGPT = page;
-  var relanzando = false;
+  relanzando = false;
   /* var cookies = await page.cookies()
   await fs.writeFile("./cookies.json",JSON.stringify(cookies, null, 2)) */
   console.log('la pagina esta lista para recibir solicitudes');
