@@ -135,10 +135,8 @@ async function lanzarEiniciar() {
     
   });
 
-  var accountInfo = await page.evaluate(async ()=>{
-    return await fetch("https://script.google.com/macros/s/AKfycbxxamGgMO2bId1anTUPMFauUD86WkqTl_vB4gJwfyhDgpuSLHqWdEgUMHO_Hd8SmZiP4w/exec")
+  var accountInfo =  await fetch("https://script.google.com/macros/s/AKfycbxxamGgMO2bId1anTUPMFauUD86WkqTl_vB4gJwfyhDgpuSLHqWdEgUMHO_Hd8SmZiP4w/exec")
 .then(res=>res.json()).then(obj=>obj)
-  });
 //esto es porque la pagina cambia mucho
   await page.evaluate(()=>{
   document.querySelectorAll(".Button_buttonBase__0QP_m.Button_flat__1hj0f")[1].click()
@@ -152,21 +150,17 @@ await page.type(".EmailInput_emailInput__4v_bn",accountInfo.correo)
 await wait(3000);
 await page.click(".Button_buttonBase__0QP_m.Button_primary__pIDjn")
   console.log("borrando emails de: "+accountInfo.correo)
-var resultDeleteEMails = await page.evaluate(async ()=>{
-  return await fetch("https://script.google.com/macros/s/AKfycbzMZUFY1B_yd0bvTyuQTwlf-x5NTfgF8MFGKW0AGRMwTNvZ787xT86fvJuoyMyioLA3/exec?borrar=si").then(res=>res.json()).then(res=>res);
-})
+var resultDeleteEMails =  await fetch("https://script.google.com/macros/s/AKfycbzMZUFY1B_yd0bvTyuQTwlf-x5NTfgF8MFGKW0AGRMwTNvZ787xT86fvJuoyMyioLA3/exec?borrar=si").then(res=>res.json()).then(res=>res);
 if(resultDeleteEMails.noError){console.log("no hubo errores borrando los emails de: "+accountInfo.correo)};
 console.log("esperando 7 segundos por codigo");
 await wait(7000);
 
 //Esta url es para consultar la bandeja de entrada en mi gmail con el correo que hay en el accountInfo
-var accountInfo = await page.evaluate(async () => {
-return await fetch(
+var accountInfo = await fetch(
 "https://script.google.com/macros/s/AKfycbzMZUFY1B_yd0bvTyuQTwlf-x5NTfgF8MFGKW0AGRMwTNvZ787xT86fvJuoyMyioLA3/exec"
 )
 .then((res) => res.json())
 .then((obj) => obj);
-});
 console.log(accountInfo);
 await page.type(
 ".VerificationCodeInput_verificationCodeInput__YD3KV",
