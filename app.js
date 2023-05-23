@@ -7,6 +7,7 @@ sudo apt-get install -y libgtk-3-0
 sudo apt-get install -y libgbm1
 */
 
+
 //const puppeteer = require('puppeteer-extra');
 /* const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin()) */
@@ -320,7 +321,7 @@ app.get('/refresh', async (req, res) => {
                 
                 
                 await pageChatGPT.waitForSelector(
-                  '.ChatMessageInputView_textInput__Aervw',
+                  '.GrowingTextArea_textArea__eadlu',
                   { timeout: 4000 }
                 );
                 // Si se encuentra el selector, se ejecutan estas instrucciones:
@@ -441,7 +442,7 @@ async function talk(cuerpo) {
     // document.querySelector(".ChatMessageInputView_paintbrushWraper__DHMNW").click()
   }
   await pageChatGPT.evaluate((promt_recibido) => {
-    document.querySelector('.ChatMessageInputView_textInput__Aervw').value =
+    document.querySelector('.GrowingTextArea_textArea__eadlu').value =
       promt_recibido;
   }, cuerpo.message);
   await pageChatGPT.click(
