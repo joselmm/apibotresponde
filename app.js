@@ -248,6 +248,9 @@ document.querySelector(".ChatMessageFeedbackButtons_feedbackButtonsContainer__0X
         message:"cuanto es 9x8"  
     }
    ) */
+  
+//AVISAR A TELEGRAM
+  await fetch("https://qbyoj2-5487.csb.app/disponible")
    
 }
 
