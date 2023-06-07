@@ -433,16 +433,29 @@ function wait(ms) {
 async function talk(cuerpo) {
     responsing=true;
   if (cuerpo.clearContext) {
-    await pageChatGPT.click('.ChatMessageInputView_paintbrushWraper__DHMNW');
+    //await pageChatGPT.click('.ChatMessageInputView_paintbrushWraper__DHMNW');
+    
     // document.querySelector(".ChatMessageInputView_paintbrushWraper__DHMNW").click()
+
+  await pageChatGPT.evaluate(() => {
+      var footerButtons = Array.from(document.querySelectorAll("footer button"));
+      var breakButton = footerButtons.filter(btn => btn.className.toLowerCase().includes("break"))[0];
+      breakButton.click(); 
+  });
   }
   await pageChatGPT.evaluate((promt_recibido) => {
     document.querySelector('.GrowingTextArea_textArea__eadlu').value =
       promt_recibido;
   }, cuerpo.message);
-  await pageChatGPT.click(
+ /* await pageChatGPT.click(
     '.Button_buttonBase__0QP_m.Button_primary__pIDjn.ChatMessageSendButton_sendButton__OMyK1.ChatMessageInputContainer_sendButton__s7XkP'
-  );
+  );*/
+
+  await pageChatGPT.evaluate(() => {
+     var footerButtons = Array.from(document.querySelectorAll("footer button"));
+     var buttonToSend = footerButtons.filter(btn => btn.className.toLowerCase().includes("send"))[0];
+      buttonToSend.click();
+  });
 
         var valor = await new Promise(async (resolve,reject)=>{
         for (let i = 0; i < 100; i++) {
