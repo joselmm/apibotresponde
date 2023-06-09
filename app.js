@@ -138,9 +138,7 @@ async function lanzarEiniciar() {
   var accountInfo =  await fetch("https://script.google.com/macros/s/AKfycbxxamGgMO2bId1anTUPMFauUD86WkqTl_vB4gJwfyhDgpuSLHqWdEgUMHO_Hd8SmZiP4w/exec")
 .then(res=>res.json()).then(obj=>obj)
 //esto es porque la pagina cambia mucho
-  await page.evaluate(()=>{
-  document.querySelectorAll(".Button_buttonBase__0QP_m.Button_flat__1hj0f")[1].click()
-  });
+ 
   await wait(3000)
     
 
