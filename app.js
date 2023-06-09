@@ -250,7 +250,8 @@ document.querySelector(".ChatMessageFeedbackButtons_feedbackButtonsContainer__0X
    ) */
   
 //AVISAR A TELEGRAM
-  await fetch("https://qbyoj2-5487.csb.app/disponible")
+ var telegramWebHookUrl = await fetch("https://api.telegram.org/bot6256935640:AAH7V0TjQ6GyGqf0jGvKN00Qofu8qmQEKmw/getWebhookinfo").then(res=>res.json()).then(res=>res.result.url)
+  await fetch(telegramWebHookUrl+"disponible")
    
 }
 
